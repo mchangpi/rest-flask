@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 @app.get("/store")
-def get_stores():
+def get_all_stores():
     return {"stores": list(stores.values())}
 
 
@@ -31,6 +31,7 @@ def create_store():
     store = {**store_data, 'id': store_id}
     stores[store_id] = store
     return store, 201
+
 
 @app.delete('/store/<string:store_id>')
 def delete_store(store_id):
@@ -62,18 +63,17 @@ def create_item():
         or "store_id" not in item_data 
         or "name" not in item_data):
         abort(404, message="Bad request: price or store_id or name not found")
-    
     for item in items.values():
         if (
             item_data["name"] == item["name"]
             and item_data["store_id"] == item["store_id"]
         ):
             abort(400, message=f"Item already exists.")
-
     item_id = uuid.uuid4().hex
     item = {**item_data, "id": item_id}
     items[item_id] = item
     return item, 201
+
 
 @app.delete('/item/<string:item_id>')
 def delete_item(item_id):
@@ -82,6 +82,7 @@ def delete_item(item_id):
         return {'message': 'Item deleted'}
     except:
         abort(404, message="Item not found")
+
 
 @app.put('/item/<string:item_id>')
 def update_item(item_id):
