@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields
 
-# Serialize == Dump # dump_only – (read-only fields)
-# Deserialize == Load # load_only – (write-only fields)
+# Serialize == Dump to Client # dump_only – (read-only fields)
+# Deserialize == Load into Server # load_only – (write-only fields)
 
 
 class ItemSchema(Schema):
